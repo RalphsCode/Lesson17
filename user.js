@@ -26,7 +26,8 @@ const $tagFavoriteStory = $("#all-stories-list");
 
      $tagFavoriteStory.on('click', '#story-delete', function(evt){
       //  call function to delete the relevant story
-      deleteStory(evt.target.parentElement.id);
+      if (currentUser !== undefined){
+        deleteStory(evt.target.parentElement.id)};
     })
 
 
