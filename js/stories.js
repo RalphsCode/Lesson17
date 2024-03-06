@@ -88,7 +88,7 @@ function favIcon(story){
               const foundFavorite = userFavoritesArr.find(favStory => favStory.storyId === story.storyId);
                     if (foundFavorite){
                       // If the story is a favorite add 'favorite' to the class, and use the solid star icon
-                  return '<i class="fa-sharp fa-solid fa-star favorite" style="color: green;" id="favorite"></i>';
+                  return '<i class="fa-sharp fa-solid fa-star favorite" style="color: green;" title="Click favorites on nav bar above, to see only your favorite stories" id="favorite"></i>';
                 } else {
                       // If the story is not a favorite, show the outline star icon
                   return '<i class="fas fa-sharp fa-regular fa-star" title="Tag as a favorite" id="favorite"></i>';
