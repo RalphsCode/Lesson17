@@ -82,7 +82,7 @@ function generateStoryMarkup(story) {
 function favIcon(story){  
   if (currentUser !== undefined){
     // Check for the user having no favorites
-    if (userFavoritesArr.length >= 1) {
+    if (userFavoritesArr.length >= 1 || userFavoritesArr == undefined) {
         // See if the current story is in the user's favorites array
         const foundFavorite = userFavoritesArr.find(favStory => favStory.storyId === story.storyId);
                if (foundFavorite){
