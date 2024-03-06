@@ -66,10 +66,10 @@ function generateStoryMarkup(story) {
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>&nbsp;
-        <i class="fa-solid fa-xmark" style="color: lightcoral;" id="story-delete"></i>&nbsp;
+        <i class="fa-solid fa-xmark" style="color: lightcoral;" title="Delete story" id="story-delete"></i>&nbsp;
         <small class="story-hostname">(${hostName})</small><br>
-        <small class="story-author" style="color: green;">by ${story.author}</small>
-        <small class="story-user" style="color: lightcoral; text-indent: 2em;">posted by ${story.username}</small>
+        <small class="story-author">by ${story.author}</small>
+        <small class="story-user"">posted by ${story.username}</small>
         <hr>
       </li>
     `);
@@ -80,26 +80,30 @@ function generateStoryMarkup(story) {
     or, show star outline if story is not a favorite of the user */
 
 function favIcon(story){  
-  if (currentUser !== undefined){
-    // Check for the user having no favorites
-    if (userFavoritesArr.length >= 1 || userFavoritesArr == undefined) {
-        // See if the current story is in the user's favorites array
-        const foundFavorite = userFavoritesArr.find(favStory => favStory.storyId === story.storyId);
-               if (foundFavorite){
-                // If the story is a favorite add 'favorite' to the class, and use the solid star icon
-            return '<i class="fa-sharp fa-solid fa-star favorite" style="color: green;" id="favorite"></i>';
+      if (currentUser !== undefined){
+          // Check for the user having no favorites
+          if (userFavoritesArr !== undefined) {
+            if (userFavoritesArr.length >= 1){
+              // See if the current story is in the user's favorites array
+              const foundFavorite = userFavoritesArr.find(favStory => favStory.storyId === story.storyId);
+                    if (foundFavorite){
+                      // If the story is a favorite add 'favorite' to the class, and use the solid star icon
+                  return '<i class="fa-sharp fa-solid fa-star favorite" style="color: green;" id="favorite"></i>';
+                } else {
+                      // If the story is not a favorite, show the outline star icon
+                  return '<i class="fas fa-sharp fa-regular fa-star" title="Tag as a favorite" id="favorite"></i>';
+                }
+            } else {  
+              // If the user has no favorites, show the outline star icon
+              return '<i class="fas fa-sharp fa-regular fa-star" title="Tag as a favorite" id="favorite"></i>';
+              } // END for...of loop
           } else {
-                // If the story is not a favorite, show the outline star icon
-            return '<i class="fa-sharp fa-regular fa-star" style="color: lightgreen;" id="favorite"></i>';
+            return '<i class="fas fa-sharp fa-regular fa-star"  title="Tag as a favorite" ></i>';
           }
-      } else {  
-        // If the user has no favorites, show the outline star icon
-        return '<i class="fa-sharp fa-regular fa-star" style="color: lightgreen;" id="favorite"></i>';
-        } // END for...of loop
-  } else {
-    return '<i class="fa-sharp fa-regular fa-star" style="color: lightgreen;"></i>';
-  }
-  }  // END favIcon()
+      } else {
+        return '<i class="fas fa-sharp fa-regular fa-star" title="Log in to tag as a favorite" ></i>';
+      }
+    }  // END favIcon()
   
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
@@ -115,7 +119,7 @@ async function putStoriesOnPage(evt) {
       const whichStories = evt.target.id;   // get the type of stories requested
       if (whichStories == 'nav-favorites') {  // user requested favorite stories
         if (currentUser !== undefined){
-          if (userFavoritesArr.length == 0 || userFavoritesArr == undefined){   // if ther are no favorite stories
+          if (userFavoritesArr == undefined || userFavoritesArr.length == 0){   // if ther are no favorite stories
                 const noFavoriteText = '<p>You have not tagged any stories as favorite stories.</p>';
                 $allStoriesList.append(noFavoriteText);
           } else {
