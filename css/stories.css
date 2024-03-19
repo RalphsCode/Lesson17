@@ -32,8 +32,20 @@
 
 .story-author {
   margin-left: 2em;
+  color: green;
 }
 
 .story-user {
   display: block;
+  color: lightcoral;
+  margin-left: 2em;
+}
+
+.fas {
+  color: #bcf8a1; 
+  transition: color 0.3s ease; 
+}
+
+.fas:hover {
+  color: #039905; 
 }
